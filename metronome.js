@@ -14,8 +14,9 @@ function setVolume(audioCtx, gainNode, volumePercent) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  let volumeSlider = document.getElementById("volumeSlider");
+  const volumeSlider = document.getElementById("volumeSlider");
   const startBtn = document.getElementById("startBtn");
+  const bpmInput = document.getElementById("bpmInput");
 
   let audioCtx = new AudioContext();
   let gain = audioCtx.createGain();
@@ -31,24 +32,31 @@ document.addEventListener('DOMContentLoaded', function () {
     bufferData[i] = Math.random() * 2 - 1; // [-1.0; 1.0]
   }
 
-  const bpm = 60;
-  let metronomeInterval;
-  let enabled = false;
+  let metronomeInterval = null;
 
   startBtn.addEventListener("click", function(e){
-    enabled = !enabled
-    e.target.innerHTML = enabled ? "Stop" : "Start";
-    if (enabled) {
+    if (metronomeInterval === null) {
       playBeat(audioCtx, gain, buffer);
       metronomeInterval = setInterval(function(){
         playBeat(audioCtx, gain, buffer);
-      }, 60000/60);
+      }, 60000/bpmInput.valueAsNumber);
     } else {
       clearInterval(metronomeInterval);
+      metronomeInterval = null;
     }
+    e.target.innerHTML = metronomeInterval === null ? "Start" : "Stop";
   });
 
   volumeSlider.addEventListener("input", function(e){
     setVolume(audioCtx, gain, e.target.valueAsNumber)
+  });
+
+  bpmInput.addEventListener("input", function(e){
+    if (metronomeInterval !== null) {
+      clearInterval(metronomeInterval);
+      metronomeInterval = setInterval(function(){
+        playBeat(audioCtx, gain, buffer);
+      }, 60000/e.target.valueAsNumber);
+    }
   });
 });
