@@ -1,0 +1,36 @@
+.container {
+    max-width: 40rem;
+    margin: auto;
+    text-align: center;
+}
+
+#bpmInput {
+    font-size: 3em;
+    width: 2.5em;
+}
+
+#bpmText {
+    font-size: 3em;
+}
+
+#startBtn {
+    font-size: 3em;
+    width: 70%;
+}
+
+.row {
+    margin: 1em 0;
+}
+
+.volume {
+    width: 70%;
+    margin: 2em auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.volume #volumeSlider {
+    flex: 1;
+    margin-left: 1em;
+}
