@@ -19,7 +19,7 @@ class Metronome {
     this.metronomeInterval = null;
 
     this.bpm = 60;
-    this.volumeScale = 0.6;
+    this.volumeScale = 0.3;
   }
 
   scheduler() {
